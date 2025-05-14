@@ -1,6 +1,8 @@
 package com.example.k22411csampleproject;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,12 +27,12 @@ public class EmployeeManagementActivity extends AppCompatActivity {
         // Khởi tạo ListEmployee và tạo dữ liệu giả lập
         listEmployee = new ListEmployee();
         listEmployee.gen_dataset();
-
-        // Khởi tạo RecyclerView
-        rvEmployees = findViewById(R.id.rv_employees);
-        rvEmployees.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new EmployeeAdapter(listEmployee.getEmployees());
-        rvEmployees.setAdapter(adapter);
+//
+//        // Khởi tạo RecyclerView
+//        rvEmployees = findViewById(R.id.rv_employees);
+//        rvEmployees.setLayoutManager(new LinearLayoutManager(this));
+//        adapter = new EmployeeAdapter(listEmployee.getEmployees());
+//        rvEmployees.setAdapter(adapter);
 
         // Xử lý insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -43,5 +45,10 @@ public class EmployeeManagementActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void open_employee_healthcare(View view) {
+        Intent intent= new Intent(EmployeeManagementActivity.this, EmployeeHealthCareActivity.class);
+        startActivity(intent);
     }
 }

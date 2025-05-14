@@ -17,6 +17,15 @@ public class MainActivity extends AppCompatActivity {
     ImageView imgEmployee;
     TextView txtEmployee;
 
+    ImageView imgCustomer;
+    TextView txtCustomer;
+
+    ImageView imgCategory;
+    TextView txtCategory;
+
+    ImageView imgProduct;
+    TextView txtProduct;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +51,19 @@ public class MainActivity extends AppCompatActivity {
                 openEmployeeManagementActivity();
             }
         });
+        imgCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCustomerManagementActivity();
+            }
+        });
+        txtCustomer.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               openCustomerManagementActivity();
+           }
+       });
+
         txtEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,15 +71,66 @@ public class MainActivity extends AppCompatActivity {
                 openEmployeeManagementActivity();
             }
         });
+
+        imgCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCategoryManagementActivity();
+            }
+        });
+        txtCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openCategoryManagementActivity();
+            }
+        });
+
+        imgProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openProductManagementActivity();
+            }
+        });
+        txtProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openProductManagementActivity();
+            }
+        });
+
     }
+
+    private void openProductManagementActivity()
+        {
+            Intent intent=new Intent(MainActivity.this,ProductManagementActivity.class);
+            startActivity(intent);
+        }
+    void openCategoryManagementActivity()
+    {
+        Intent intent=new Intent(MainActivity.this, CategoryManagementActivity.class);
+        startActivity(intent);
+    }
+
     void openEmployeeManagementActivity()
     {
         Intent intent=new Intent(MainActivity.this, EmployeeManagementActivity.class);
         startActivity(intent);
     }
 
+    void openCustomerManagementActivity()
+    {
+        Intent intent=new Intent(MainActivity.this, CustomerManagementActivity.class);
+        startActivity(intent);
+    }
+
     private void addView() {
         imgEmployee = findViewById(R.id.imgEmployee);
         txtEmployee = findViewById(R.id.txtEmployee);
+        imgCustomer = findViewById(R.id.imgCustomer);
+        txtCustomer = findViewById(R.id.txtCustomer);
+        imgCategory = findViewById(R.id.imgCategory);
+        txtCategory = findViewById(R.id.txtCategory);
+        imgProduct = findViewById(R.id.imgProduct);
+        txtProduct = findViewById(R.id.txtProduct);
     }
 }
