@@ -29,7 +29,7 @@
 
                 <ImageView
                     android:id="@+id/imgEmployee"
-                    android:layout_width="match_parent"
+                    android:layout_width="201dp"
                     android:layout_height="196dp"
                     app:srcCompat="@mipmap/ic_employee" />
 
@@ -49,8 +49,8 @@
 
                 <ImageView
                     android:id="@+id/imgCustomer"
-                    android:layout_width="240dp"
-                    android:layout_height="196dp"
+                    android:layout_width="191dp"
+                    android:layout_height="191dp"
                     android:textAlignment="center"
                     app:srcCompat="@mipmap/ic_customer" />
 
@@ -77,14 +77,17 @@
                 <ImageView
                     android:id="@+id/imgProduct"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@mipmap/ic_employee_healthcare" />
+                    android:layout_height="147dp"
+                    app:srcCompat="@mipmap/ic_product" />
 
                 <TextView
                     android:id="@+id/txtProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_product" />
+                    android:text="@string/title_product"
+                    android:textAlignment="center"
+                    android:textColor="#F44336"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -93,19 +96,19 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imgCategory"
+                    android:id="@+id/imgAdvancedProduct"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@mipmap/ic_employee_healthcare" />
+                    android:layout_height="148dp"
+                    app:srcCompat="@mipmap/ic_advanced_product" />
 
                 <TextView
-                    android:id="@+id/txtCategory"
+                    android:id="@+id/txtAdvancedProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_category_list"
+                    android:text="@string/title_advanced_product"
                     android:textAlignment="center"
                     android:textColor="#F44336"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </TableRow>

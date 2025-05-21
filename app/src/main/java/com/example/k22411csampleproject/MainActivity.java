@@ -12,6 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.models.ListCategory;
+
 public class MainActivity extends AppCompatActivity {
 
     ImageView imgEmployee;
@@ -19,9 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView imgCustomer;
     TextView txtCustomer;
-
-    ImageView imgCategory;
-    TextView txtCategory;
 
     ImageView imgProduct;
     TextView txtProduct;
@@ -31,11 +30,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
-        addView(); //gán ô nhớ
-
-        addEvent();
-
+        addViews();
+        addEvents();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -43,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void addEvent() {
+    private void addEvents() {
         imgEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,19 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 openEmployeeManagementActivity();
             }
         });
-        imgCustomer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCustomerManagementActivity();
-            }
-        });
-        txtCustomer.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               openCustomerManagementActivity();
-           }
-       });
-
         txtEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,22 +55,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        imgCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCategoryManagementActivity();
-            }
-        });
-        txtCategory.setOnClickListener(new View.OnClickListener() {
+        imgCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openCategoryManagementActivity();
+                openCustomerManagementActivity();
+            }
+        });
+        txtCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openCustomerManagementActivity();
             }
         });
 
         imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 openProductManagementActivity();
             }
         });
@@ -97,17 +80,10 @@ public class MainActivity extends AppCompatActivity {
                 openProductManagementActivity();
             }
         });
-
     }
 
-    private void openProductManagementActivity()
-        {
-            Intent intent=new Intent(MainActivity.this,ProductManagementActivity.class);
-            startActivity(intent);
-        }
-    void openCategoryManagementActivity()
-    {
-        Intent intent=new Intent(MainActivity.this, CategoryManagementActivity.class);
+    private void openProductManagementActivity() {
+        Intent intent=new Intent(MainActivity.this, ProductManagementActivity.class);
         startActivity(intent);
     }
 
@@ -116,21 +92,18 @@ public class MainActivity extends AppCompatActivity {
         Intent intent=new Intent(MainActivity.this, EmployeeManagementActivity.class);
         startActivity(intent);
     }
-
     void openCustomerManagementActivity()
     {
         Intent intent=new Intent(MainActivity.this, CustomerManagementActivity.class);
         startActivity(intent);
     }
 
-    private void addView() {
-        imgEmployee = findViewById(R.id.imgEmployee);
-        txtEmployee = findViewById(R.id.txtEmployee);
-        imgCustomer = findViewById(R.id.imgCustomer);
-        txtCustomer = findViewById(R.id.txtCustomer);
-        imgCategory = findViewById(R.id.imgCategory);
-        txtCategory = findViewById(R.id.txtCategory);
-        imgProduct = findViewById(R.id.imgProduct);
-        txtProduct = findViewById(R.id.txtProduct);
+    private void addViews() {
+        imgEmployee=findViewById(R.id.imgEmployee);
+        txtEmployee=findViewById(R.id.txtEmployee);
+        imgCustomer=findViewById(R.id.imgCustomer);
+        txtCustomer=findViewById(R.id.txtCustomer);
+        imgProduct=findViewById(R.id.imgProduct);
+        txtProduct=findViewById(R.id.txtProduct);
     }
 }
