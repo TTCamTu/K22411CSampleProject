@@ -121,10 +121,10 @@ public class ProductManagementActivity extends AppCompatActivity {
             Intent intent = new Intent(ProductManagementActivity.this, ProductDetailActivity.class);
             startActivityForResult(intent, 400);
             return true;
-        } else if (id == R.id.menu_product_broadcast_advertising) {
+        } else if (id == R.id.menu_list_products_new) {
             Toast.makeText(ProductManagementActivity.this, R.string.msg_broadcast_advertising, Toast.LENGTH_LONG).show();
             return true;
-        } else if (id == R.id.menu_product_help) {
+        } else if (id == R.id.menu_list_products_about) {
             Toast.makeText(ProductManagementActivity.this, R.string.msg_help, Toast.LENGTH_LONG).show();
             return true;
         }

@@ -9,6 +9,8 @@
     <string name="confirm_exit_message">Are you sure you want to exit?</string>
     <string name="confirm_exit_yes">Yes</string>
     <string name="confirm_exit_no">No</string>
+
+<!--    not use-->
     <string name="title_employee">Employee</string>
     <string name="title_customer">Customer</string>
     <string name="title_employee_management">Employee Management</string>
@@ -57,4 +59,13 @@
     <string name="msg_new_product">Mở màn hình thêm mới sản phẩm</string>
     <string name="msg_broadcast_advertising">Mở màn hình quảng cáo</string>
     <string name="msg_help">Mở website hướng dẫn sử dụng</string>
+<!-- New-->
+    <string name="title_menu_list_products_new">Add</string>
+    <string name="title_menu_list_products_about">About</string>
+    <string name="title_products_id">Product ID:</string>
+    <string name="title_products_code">Product Code:</string>
+    <string name="title_products_name">Product Name:</string>
+    <string name="title_products_price">Product Price:</string>
+    <string name="title_product_image"></string>
+
 </resources>

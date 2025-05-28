@@ -2,6 +2,7 @@ package com.example.k22411csampleproject;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +21,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.connectors.AccountConnector;
 import com.example.connectors.EmployeeConnector;
+import com.example.models.Account;
 import com.example.models.Employee;
 
 import java.util.Timer;
@@ -56,10 +59,10 @@ public class LoginActivity extends AppCompatActivity {
     public void do_login(View view) {
         String usrname = edtUserName.getText().toString();
         String password = edtPassWord.getText().toString();
-        EmployeeConnector ec=new EmployeeConnector();
-        Employee emp=ec.login(usrname,password);
-        if (emp!=null) {
-            Intent intent = new Intent(this, MainActivity.class);
+        AccountConnector ec=new AccountConnector();
+        Account acc=ec.login(usrname,password);
+        if (acc!=null) {
+            Intent intent = new Intent(this, ListProductsActivity.class);
             startActivity(intent);
         }
         else
@@ -95,6 +98,45 @@ public class LoginActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
+    }
+    // Lưu dữ liệu vào ổ cứng của điện thoại
+    public void saveLoginInformation()
+    {
+        SharedPreferences preferences=getSharedPreferences("LOGIN_INFORMATION", MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+        String usrname = edtUserName.getText().toString();
+        String password = edtPassWord.getText().toString();
+        boolean isSave=chkSaveLoginInfor.isChecked();
+        editor.putString("USERNAME",usrname);
+        editor.putString("PASSWORD",password);
+        editor.putBoolean("SAVED",isSave);
+        editor.commit();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveLoginInformation();
+    }
+
+    public void restoreLoginInformation()
+    {
+        SharedPreferences preferences=getSharedPreferences("LOGIN_INFORMATION", MODE_PRIVATE);
+        String usrname=preferences.getString("USERNAME","");
+        String password=preferences.getString("PASSWORD","");
+        boolean isSave=preferences.getBoolean("SAVED",true);
+        if(isSave)
+        {
+            edtUserName.setText(usrname);
+            edtPassWord.setText(password);
+            chkSaveLoginInfor.setChecked(true);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        restoreLoginInformation();
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
