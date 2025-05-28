@@ -2,6 +2,7 @@ package com.example.k22411csampleproject;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -96,6 +97,46 @@ public class LoginActivity extends AppCompatActivity {
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
     }
+    // Lưu dữ liệu vào ổ cứng của điện thoại
+    public void saveLoginInformation()
+    {
+        SharedPreferences preferences=getSharedPreferences("LOGIN_INFORMATION", MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+        String usrname = edtUserName.getText().toString();
+        String password = edtPassWord.getText().toString();
+        boolean isSave=chkSaveLoginInfor.isChecked();
+        editor.putString("USERNAME",usrname);
+        editor.putString("PASSWORD",password);
+        editor.putBoolean("SAVED",isSave);
+        editor.commit();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveLoginInformation();
+    }
+
+    public void restoreLoginInformation()
+    {
+        SharedPreferences preferences=getSharedPreferences("LOGIN_INFORMATION", MODE_PRIVATE);
+        String usrname=preferences.getString("USERNAME","");
+        String password=preferences.getString("PASSWORD","");
+        boolean isSave=preferences.getBoolean("SAVED",true);
+        if(isSave)
+        {
+            edtUserName.setText(usrname);
+            edtPassWord.setText(password);
+            chkSaveLoginInfor.setChecked(true);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        restoreLoginInformation();
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
