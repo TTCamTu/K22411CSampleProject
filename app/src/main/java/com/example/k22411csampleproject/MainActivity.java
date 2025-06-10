@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.models.ListCategory;
+import com.example.models.OrdersViewer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView imgAdvancedProduct;
     TextView txtAdvancedProduct;
+
+    ImageView imgPaymentMethod;
+    TextView txtPaymentMethod;
+
+    ImageView imgOrder;
+    TextView txtOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
+        imgOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openOrderViewersActivity();
+            }
+        });
+        txtOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openOrderViewersActivity();
+            }
+        });
+
+
         imgEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,8 +116,30 @@ public class MainActivity extends AppCompatActivity {
                 openAdvancedProductManagementActivity();
             }
         });
+
+        imgPaymentMethod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPaymentMethodActivity();
+            }
+        });
+        txtPaymentMethod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPaymentMethodActivity();
+            }
+        });
     }
 
+    private void openOrderViewersActivity() {
+        Intent intent=new Intent(MainActivity.this, OrdersViewerActivity.class);
+        startActivity(intent);
+    }
+
+    private void openPaymentMethodActivity() {
+        Intent intent=new Intent(MainActivity.this, PaymentMethodActivity.class);
+        startActivity(intent);
+    }
     private void openAdvancedProductManagementActivity() {
         Intent intent=new Intent(MainActivity.this, AdvancedProductManagementActivity.class);
         startActivity(intent);
@@ -118,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     private void addViews() {
         imgEmployee=findViewById(R.id.imgEmployee);
         txtEmployee=findViewById(R.id.txtEmployee);
@@ -127,5 +171,9 @@ public class MainActivity extends AppCompatActivity {
         txtProduct=findViewById(R.id.txtProduct);
         imgAdvancedProduct=findViewById(R.id.imgAdvancedProduct);
         txtAdvancedProduct=findViewById(R.id.txtAdvancedProduct);
+        imgPaymentMethod=findViewById(R.id.imgPaymentMethod);
+        txtPaymentMethod=findViewById(R.id.txtPaymentMethod);
+        imgOrder=findViewById(R.id.imgOrder);
+        txtOrder=findViewById(R.id.txtOrder);
     }
 }

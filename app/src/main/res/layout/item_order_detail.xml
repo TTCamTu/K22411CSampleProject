@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/txtProductId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/order_detail_productID"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/order_detail_quantity"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/order_detail_price"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtDiscount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/order_detail_discount"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtVat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/order_detail_VAT"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtTotalValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/order_detail_total_value"
+        android:textColor="#F44336"
+        android:textSize="20sp" />
+
+</LinearLayout>

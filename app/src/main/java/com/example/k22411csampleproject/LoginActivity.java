@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -22,8 +23,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.connectors.EmployeeConnector;
+import com.example.connectors.SQLiteConnector;
 import com.example.models.Employee;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Timer;
 
 public class LoginActivity extends AppCompatActivity {
@@ -32,6 +39,10 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox chkSaveLoginInfor;
     Button btnLogin;
     ImageView imgExit;
+
+    String DATABASE_NAME="Sale_Database.sqlite";
+    private static final String DB_PATH_SUFFIX = "/databases/";
+    SQLiteDatabase database=null;
     private boolean doubleBackToExitPressedOnce = false;
     private static final long DOUBLE_BACK_PRESS_THRESHOLD = 1200;
 
@@ -46,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        processCopy();
     }
 
     private void addView() {
@@ -55,17 +68,25 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void do_login(View view) {
-        String usrname = edtUserName.getText().toString();
-        String password = edtPassWord.getText().toString();
-        EmployeeConnector ec=new EmployeeConnector();
-        Employee emp=ec.login(usrname,password);
-        if (emp!=null) {
+        String usr = edtUserName.getText().toString();
+        String pwd = edtPassWord.getText().toString();
+        EmployeeConnector ec = new EmployeeConnector();
+
+        SQLiteConnector sqLiteConnector = new SQLiteConnector(this);
+        sqLiteConnector.openDatabase();
+        SQLiteDatabase database = sqLiteConnector.getDatabase(); // Lấy database từ cùng đối tượng
+        if (database == null) {
+            Toast.makeText(this, "Failed to open database!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Employee emp = ec.login(database, usr, pwd);
+
+        if (emp != null) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-        }
-        else
-        {
-            Toast.makeText(this,"Login failed - please check your account again!",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Login failed - please check your account again!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -159,5 +180,61 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+    private void processCopy() {
+        //private app
+        File dbFile = getDatabasePath(DATABASE_NAME);
+
+        if (!dbFile.exists())
+        {
+            try
+            {
+                CopyDataBaseFromAsset();
+                Toast.makeText(this, "Copying sucess from Assets folder", Toast.LENGTH_LONG).show();
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private String getDatabasePath() {
+        return getApplicationInfo().dataDir + DB_PATH_SUFFIX+ DATABASE_NAME;
+    }
+
+    public void CopyDataBaseFromAsset()
+    {
+        try {
+            InputStream myInput;
+
+            myInput = getAssets().open(DATABASE_NAME);
+
+
+            // Path to the just created empty db
+            String outFileName = getDatabasePath();
+
+            // if the path doesn't exist first, create it
+            File f = new File(getApplicationInfo().dataDir + DB_PATH_SUFFIX);
+            if (!f.exists())
+                f.mkdir();
+
+            // Open the empty db as the output stream
+            OutputStream myOutput = new FileOutputStream(outFileName);
+
+            // transfer bytes from the inputfile to the outputfile
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = myInput.read(buffer)) > 0) {
+                myOutput.write(buffer, 0, length);
+            }
+
+            // Close the streams
+            myOutput.flush();
+            myOutput.close();
+            myInput.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
