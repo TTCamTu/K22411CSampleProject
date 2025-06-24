@@ -50,7 +50,9 @@ public class CustomerDetailActivity extends AppCompatActivity {
             private void process_save_customer() {
                 // lấy dữ liệu trên giao diện và mô hình hóa lại hướng đối tượng
                 Customer c=new Customer();
-                c.setId(Integer.parseInt(edt_customer_id.getText().toString()));
+                String id= edt_customer_id.getText().toString();
+                if(id.trim().length()>0)
+                    c.setId(Integer.parseInt(id));
                 c.setName(edt_customer_name.getText().toString());
                 c.setEmail(edt_customer_email.getText().toString());
                 c.setPhone(edt_customer_phone.getText().toString());
@@ -70,9 +72,18 @@ public class CustomerDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-    }
-
+        btn_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {process_remove_customer();}
+            private void process_remove_customer() {
+                Intent intent=getIntent();
+                String id=edt_customer_id.getText().toString();
+                intent.putExtra("CUSTOMER_ID_REMOVE", id);
+                setResult(600,intent);
+                finish();
+            }
+            });
+        }
     private void addViews() {
         edt_customer_id=findViewById(R.id.edt_customer_id);
         edt_customer_name=findViewById(R.id.edt_customer_name);
@@ -93,7 +104,10 @@ public class CustomerDetailActivity extends AppCompatActivity {
         //lấy dữ liệu selected customer từ intent
         Customer c = (Customer) intent.getSerializableExtra("selected_customer");
         if (c==null)
+        {
+            edt_customer_id.setVisibility(View.GONE);
             return;
+        }
         //hiển thị thông tin customer lên giao diện
         edt_customer_id.setText(c.getId()+"");
         edt_customer_name.setText(c.getName());

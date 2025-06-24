@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="viettel_prefixes">
+        <item>+8432</item>
+        <item>+8433</item>
+        <item>+8434</item>
+        <item>+8435</item>
+        <item>+8436</item>
+        <item>+8437</item>
+        <item>+8438</item>
+        <item>+8439</item>
+        <item>+8496</item>
+        <item>+8497</item>
+        <item>+8498</item>
+        <item>+8486</item>
+        <item>+8488</item>
+    </string-array>
+    <string-array name="mobifone_prefixes">
+        <item>+8470</item>
+        <item>+8476</item>
+        <item>+8477</item>
+        <item>+8478</item>
+        <item>+8479</item>
+        <item>+8489</item>
+        <item>+8490</item>
+        <item>+8493</item>
+    </string-array>
+</resources>

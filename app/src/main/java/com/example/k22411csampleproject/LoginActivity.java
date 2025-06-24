@@ -1,10 +1,15 @@
 package com.example.k22411csampleproject;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -40,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     ImageView imgExit;
 
+    BroadcastReceiver networkReceiver=null;
+
     String DATABASE_NAME="Sale_Database.sqlite";
     private static final String DB_PATH_SUFFIX = "/databases/";
     SQLiteDatabase database=null;
@@ -51,20 +58,46 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        addView();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
+        addView();
+
         processCopy();
+
+        setupBroadcastReceiver();
+    }
+
+    private void setupBroadcastReceiver() {
+        networkReceiver=new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //chút nữa tự động nhảy vào đây khi internet bị thay đổi trạng thái
+                //Internet bị thay đổi trạng thái
+                ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                if(networkInfo != null && networkInfo.isConnected())
+                {//vào đây là có Internet không quan tâm WIFI hay 4G
+                    btnLogin.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    btnLogin.setVisibility(View.INVISIBLE);
+                }
+
+            }
+        };
     }
 
     private void addView() {
         edtUserName=findViewById(R.id.edtUserName);
         edtPassWord=findViewById(R.id.edtPassWord);
         chkSaveLoginInfor=findViewById(R.id.chkSaveLoginInfor);
+        btnLogin=findViewById(R.id.btnLogin);
     }
 
     public void do_login(View view) {
@@ -136,6 +169,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         saveLoginInformation();
+        if(networkReceiver!=null)
+        {
+            unregisterReceiver(networkReceiver);
+        }
     }
 
     public void restoreLoginInformation()
@@ -156,6 +193,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         restoreLoginInformation();
+
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkReceiver, filter);
     }
 
     @Override
@@ -208,7 +248,6 @@ public class LoginActivity extends AppCompatActivity {
             InputStream myInput;
 
             myInput = getAssets().open(DATABASE_NAME);
-
 
             // Path to the just created empty db
             String outFileName = getDatabasePath();

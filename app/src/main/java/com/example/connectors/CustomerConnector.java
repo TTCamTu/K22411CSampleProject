@@ -1,5 +1,6 @@
 package com.example.connectors;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -31,33 +32,33 @@ public class CustomerConnector {
         }
         ArrayList<Customer> results = new ArrayList<>();
         for (Customer c : listCustomer.getCustomers()) {
-            if (c.getPhone().startsWith(provider))
-            {
+            if (c.getPhone().startsWith(provider)) {
                 results.add(c);
             }
         }
         return results;
     }
+
     public boolean isExist(Customer c) {
         return listCustomer.isExist(c);
     }
-    public void addCustomer(Customer c)
-    {
+
+    public void addCustomer(Customer c) {
         listCustomer.addCustomer(c);
     }
 
     /**
      * Day la ham truy van toan bo du lieu khach hang
      * sau do mo hinh hoa lai huong doi tuong
+     *
      * @param database
      * @return ListCustomer
      */
 
-    public ListCustomer getAllCustomers(SQLiteDatabase database)
-    {
+    public ListCustomer getAllCustomers(SQLiteDatabase database) {
         listCustomer = new ListCustomer();
         Cursor cursor = database.rawQuery("SELECT * FROM Customer", null);
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             int Id = cursor.getInt(0);
             String Name = cursor.getString(1);
             String Email = cursor.getString(2);
@@ -75,5 +76,32 @@ public class CustomerConnector {
         }
         cursor.close();
         return listCustomer;
+    }
+
+    public long saveNewCustomer(Customer c, SQLiteDatabase database) {
+        ContentValues values = new ContentValues();
+        values.put("Name", c.getName());
+        values.put("Email", c.getEmail());
+        values.put("Phone", c.getPhone());
+        values.put("Username", c.getUsername());
+        values.put("Password", c.getPassword());
+        long flag = database.insert("Customer", null, values);
+        return flag;
+    }
+
+    public long saveUpdateCustomer(Customer c, SQLiteDatabase database)
+    {
+        ContentValues values = new ContentValues();
+        values.put("Name", c.getName());
+        values.put("Email", c.getEmail());
+        values.put("Phone", c.getPhone());
+        values.put("Username", c.getUsername());
+        values.put("Password", c.getPassword());
+        long flag = database.update("Customer", values, "Id=?", new String[]{c.getId()+""});
+        return flag;
+    }
+    public long removeCustomer(String id, SQLiteDatabase database) {
+        int flag = database.delete("Customer", "Id=?", new String[]{id});
+        return flag;
     }
 }
